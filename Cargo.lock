@@ -93,6 +93,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "day2"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "common",
+ "indoc",
+ "itertools",
+ "nom",
+ "nom-supreme",
+]
+
+[[package]]
 name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -139,6 +152,12 @@ name = "indent_write"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0cfe9645a18782869361d9c8732246be7b410ad4e919d3609ebabdac00ba12c3"
+
+[[package]]
+name = "indoc"
+version = "1.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "adab1eaa3408fb7f0c777a73e7465fd5656136fc93b670eb6df3c88c2c1344e3"
 
 [[package]]
 name = "io-lifetimes"
@@ -317,6 +336,7 @@ dependencies = [
  "anyhow",
  "clap",
  "common",
+ "indoc",
  "itertools",
  "nom",
  "nom-supreme",

@@ -1,5 +1,5 @@
 [package]
-name = "template"
+name = "day2"
 version = "0.1.0"
 authors = ["Mathieu Letendre-Jauniaux <MathieuLJ@gmail.com>"]
 edition = "2021"
