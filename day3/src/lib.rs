@@ -1,6 +1,13 @@
+use itertools::Itertools;
 use std::collections::HashSet;
 
-use itertools::Itertools;
+fn score(input: char) -> i64 {
+    if input.is_lowercase() {
+        input as i64 - 'a' as i64 + 1
+    } else {
+        input as i64 - 'A' as i64 + 27
+    }
+}
 
 pub fn challenge1(input: &str) -> anyhow::Result<i64> {
     Ok(input.lines().fold(0, |acc, line| {
@@ -8,16 +15,7 @@ pub fn challenge1(input: &str) -> anyhow::Result<i64> {
         let left: HashSet<char> = left.chars().collect();
         let right: HashSet<char> = right.chars().collect();
 
-        acc + left
-            .intersection(&right)
-            .map(|c| {
-                if *c > 'Z' {
-                    *c as i64 - 'a' as i64 + 1
-                } else {
-                    *c as i64 - 'A' as i64 + 27
-                }
-            })
-            .sum::<i64>()
+        acc + left.intersection(&right).map(|c| score(*c)).sum::<i64>()
     }))
 }
 
@@ -29,13 +27,7 @@ pub fn challenge2(input: &str) -> anyhow::Result<i64> {
         .into_iter()
         .filter_map(|chunks| chunks.reduce(|a, b| a.intersection(&b).copied().collect()))
         .flatten()
-        .map(|c| {
-            if c > 'Z' {
-                c as i64 - 'a' as i64 + 1
-            } else {
-                c as i64 - 'A' as i64 + 27
-            }
-        })
+        .map(score)
         .sum())
 }
 
