@@ -10,13 +10,16 @@ fn score(input: char) -> i64 {
 }
 
 pub fn challenge1(input: &str) -> anyhow::Result<i64> {
-    Ok(input.lines().fold(0, |acc, line| {
-        let (left, right) = line.split_at(line.len() / 2);
-        let left: HashSet<char> = left.chars().collect();
-        let right: HashSet<char> = right.chars().collect();
+    Ok(input
+        .lines()
+        .map(|line| -> i64 {
+            let (left, right) = line.split_at(line.len() / 2);
+            let left: HashSet<char> = left.chars().collect();
+            let right: HashSet<char> = right.chars().collect();
 
-        acc + left.intersection(&right).map(|c| score(*c)).sum::<i64>()
-    }))
+            left.intersection(&right).copied().map(score).sum()
+        })
+        .sum())
 }
 
 pub fn challenge2(input: &str) -> anyhow::Result<i64> {
