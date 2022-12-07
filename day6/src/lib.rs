@@ -1,19 +1,17 @@
-use std::collections::BTreeSet;
-
 use anyhow::Context;
+use itertools::Itertools;
 
 fn find_marker<const SIZE: usize>(input: &str) -> Option<usize> {
     let mut buffer = ['a'; SIZE];
 
-    for (index, char) in input.char_indices() {
+    for (index, char) in input.chars().enumerate() {
         buffer[index % SIZE] = char;
 
         if index < SIZE - 1 {
             continue;
         }
 
-        // There are ways to avoid this allocation but this is easy and good enough
-        if buffer.iter().collect::<BTreeSet<_>>().len() == SIZE {
+        if buffer.iter().all_unique() {
             return Some(index + 1);
         }
     }
