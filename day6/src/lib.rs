@@ -1,39 +1,31 @@
 use std::collections::BTreeSet;
 
-use anyhow::{bail, Context};
-use itertools::Itertools;
+use anyhow::Context;
 
-pub fn challenge1(input: &str) -> anyhow::Result<usize> {
-    input
-        .char_indices()
-        .tuple_windows()
-        .find_map(|((_, a), (_, b), (_, c), (index, d))| {
-            if a == b || a == c || a == d || b == c || b == d || c == d {
-                None
-            } else {
-                Some(index + 1)
-            }
-        })
-        .context("None found")
-}
-
-pub fn challenge2(input: &str) -> anyhow::Result<usize> {
-    let mut buffer = ['a'; 14];
+fn find_marker<const SIZE: usize>(input: &str) -> Option<usize> {
+    let mut buffer = ['a'; SIZE];
 
     for (index, char) in input.char_indices() {
-        buffer[index % buffer.len()] = char;
+        buffer[index % SIZE] = char;
 
-        if index < buffer.len() - 1 {
+        if index < SIZE - 1 {
             continue;
         }
 
         // There are ways to avoid this allocation but this is easy and good enough
-        if buffer.iter().collect::<BTreeSet<_>>().len() == buffer.len() {
-            return Ok(index + 1);
+        if buffer.iter().collect::<BTreeSet<_>>().len() == SIZE {
+            return Some(index + 1);
         }
     }
+    None
+}
 
-    bail!("None found")
+pub fn challenge1(input: &str) -> anyhow::Result<usize> {
+    find_marker::<4>(input).context("No marker found")
+}
+
+pub fn challenge2(input: &str) -> anyhow::Result<usize> {
+    find_marker::<14>(input).context("No marker found")
 }
 
 #[cfg(test)]
